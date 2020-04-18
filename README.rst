@@ -93,7 +93,6 @@ Thus, getting inline help is:
 
 .. code:: bash
     
-    docker build . 
     mkdir in out && chmod 777 out
     docker run --security-opt label=type:nvidia_container_t 
                 -v $(pwd)/in:/incoming:z -v $(pwd)/out:/outgoing:z 
