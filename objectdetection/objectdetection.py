@@ -1,4 +1,4 @@
-#!/usr/bin/env python                                            
+#!/usr/bin/env python
 #
 # objectdetection ds ChRIS plugin app
 #
@@ -141,7 +141,8 @@ class Objectdetection(ChrisApp):
 
     def run(self, options):
         print(Gstr_title)
-        cmd_str = "python detect_objects_webcam.py" + options.outputdir
+        print(options.outputdir)
+        cmd_str = "python detect_objects_webcam.py -op " + options.outputdir
         os.system(cmd_str)
 
 
