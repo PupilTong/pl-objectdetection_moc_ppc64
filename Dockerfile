@@ -26,7 +26,6 @@ RUN chmod 777 /usr/local/bin/entrypoint.sh
 RUN chown -R pwrai $APPROOT
 
 USER pwrai
-RUN /bin/bash -c "pip install -r requirements.txt"
 WORKDIR $APPROOT/objectdetection
 ENTRYPOINT ["entrypoint.sh"]
 #SHELL ["/opt/anaconda/bin/conda", "run","-n", "wmlce", "/bin/bash", "-c"]
