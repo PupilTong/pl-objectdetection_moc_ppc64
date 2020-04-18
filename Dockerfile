@@ -19,14 +19,14 @@ ENV PATH=/opt/anaconda/envs/wmlce/bin:$PATH
 RUN /bin/bash -c "pip install pycuda"
 
 USER root
-COPY ["SSD_Model", "${APPROOT}/SSD_Model"]
+COPY ["objectdetection", "${APPROOT}/objectdetection"]
 COPY ["VOCdevkit", "${APPROOT}/VOCdevkit"]
 COPY ["entrypoint.sh", "/usr/local/bin"]
 RUN chmod 777 /usr/local/bin/entrypoint.sh
 RUN chown -R pwrai $APPROOT
 
 USER pwrai
-WORKDIR $APPROOT/SSD_Model
+WORKDIR $APPROOT/objectdetection
 ENTRYPOINT ["entrypoint.sh"]
 #SHELL ["/opt/anaconda/bin/conda", "run","-n", "wmlce", "/bin/bash", "-c"]
 #RUN source activate wmlce && pip install pycuda
