@@ -12,6 +12,7 @@
 
 import os
 import sys
+import detect_objects_webcam
 sys.path.append(os.path.dirname(__file__))
 
 # import the Chris app superclass
@@ -20,8 +21,14 @@ from chrisapp.base import ChrisApp
 
 Gstr_title = """
 
-Generate a title from 
-http://patorjk.com/software/taag/#p=display&f=Doom&t=objectdetection
+  ___  _     _           _     ____       _            _   _             
+ / _ \| |__ (_) ___  ___| |_  |  _ \  ___| |_ ___  ___| |_(_) ___  _ __  
+| | | | '_ \| |/ _ \/ __| __| | | | |/ _ \ __/ _ \/ __| __| |/ _ \| '_ \ 
+| |_| | |_) | |  __/ (__| |_  | |_| |  __/ ||  __/ (__| |_| | (_) | | | |
+ \___/|_.__// |\___|\___|\__| |____/ \___|\__\___|\___|\__|_|\___/|_| |_|
+          |__/                                                           
+
+
 
 """
 
@@ -133,11 +140,11 @@ class Objectdetection(ChrisApp):
         """
 
     def run(self, options):
-        """
-        Define the code to be run by this plugin app.
-        """
         print(Gstr_title)
-        print('Version: %s' % self.get_version())
+        cmd_str = "python detect_objects_webcam.py" + options.outputdir
+        os.system(cmd_str)
+
+
 
     def show_man_page(self):
         """
