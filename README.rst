@@ -87,27 +87,29 @@ Using ``docker run``
 
 To run using ``docker``, be sure to assign an "input" directory to ``/incoming`` and an output directory to ``/outgoing``. *Make sure that the* ``$(pwd)/out`` *directory is world writable!*
 
-Now, prefix all calls with 
 
-.. code:: bash
-
-    docker run --rm -v $(pwd)/out:/outgoing                             \
-            fnndsc/pl-objectdetection objectdetection.py                        \
 
 Thus, getting inline help is:
 
 .. code:: bash
-
+    # assume that after building the image id is 72607209203a
+    docker build . 
     mkdir in out && chmod 777 out
-    docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \
-            fnndsc/pl-objectdetection objectdetection.py                        \
-            --man                                                       \
-            /incoming /outgoing
+    docker run --security-opt label=type:nvidia_container_t 
+    -v $(pwd)/in:/incoming:z -v $(pwd)/out:/outgoing:z 
+    -t **72607209203a** objectdetection.py 
+    /incoming /outgoing 
 
 Examples
 --------
-
-
+.. code:: bash
+    # assume that after building the image id is 72607209203a
+    docker build . 
+    mkdir in out && chmod 777 out
+    docker run --security-opt label=type:nvidia_container_t 
+    -v $(pwd)/in:/incoming:z -v $(pwd)/out:/outgoing:z 
+    -t **72607209203a** objectdetection.py 
+    /incoming /outgoing 
 
 
 
