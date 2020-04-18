@@ -90,7 +90,6 @@ To run using ``docker``, be sure to assign an "input" directory to ``/incoming``
 
 
 Thus, getting inline help is:
-(assume that after building the image id is 72607209203a)
 
 .. code:: bash
     
@@ -98,8 +97,9 @@ Thus, getting inline help is:
     mkdir in out && chmod 777 out
     docker run --security-opt label=type:nvidia_container_t 
                 -v $(pwd)/in:/incoming:z -v $(pwd)/out:/outgoing:z 
-                -t **72607209203a** objectdetection.py 
-                /incoming /outgoing 
+                docker.io/fnndsc/pl-objectdetection_moc_ppc64 
+                objectdetection.py 
+                /incoming /outgoing
 
 Examples
 --------
@@ -107,12 +107,12 @@ Examples
 
 .. code:: bash
     
-    docker build . 
     mkdir in out && chmod 777 out
     docker run --security-opt label=type:nvidia_container_t 
                 -v $(pwd)/in:/incoming:z -v $(pwd)/out:/outgoing:z 
-                -t **72607209203a** objectdetection.py 
-                /incoming /outgoing 
+                docker.io/fnndsc/pl-objectdetection_moc_ppc64 
+                objectdetection.py 
+                /incoming /outgoing
 
 
 
