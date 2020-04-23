@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python                                            
 #
 # objectdetection ds ChRIS plugin app
 #
@@ -54,6 +54,7 @@ where necessary.)
             [--savejson <DIR>]                                          \\
             [-v <level>] [--verbosity <level>]                          \\
             [--version]                                                 \\
+            [--file <filename>]                                         \\
             <inputDir>                                                  \\
             <outputDir> 
 
@@ -138,11 +139,15 @@ class Objectdetection(ChrisApp):
         Define the CLI arguments accepted by this plugin app.
         Use self.add_argument to specify a new app argument.
         """
+        self.add_argument('-f','--file',
+                          dest      =   'filename',
+                          type      =   str,
+                          optional  =   False,
+                          help      =   'input a file name')
 
     def run(self, options):
         print(Gstr_title)
-        print(options.outputdir)
-        cmd_str = "python detect_objects_webcam.py -op " + options.outputdir
+        cmd_str = "python detect_objects_webcam.py -in " + options.inputdir + "/" + options.filename + " -op " + options.outputdir
         os.system(cmd_str)
 
 
