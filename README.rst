@@ -48,13 +48,17 @@ Synopsis
 
 .. code::
 
-    python objectdetection.py                                           \
-        [-v <level>] [--verbosity <level>]                          \
-        [--version]                                                 \
-        [--man]                                                     \
-        [--meta]                                                    \
-        <inputDir>
-        <outputDir> 
+        python objectdetection.py                                         \\
+            [-h] [--help]                                               \\
+            [--json]                                                    \\
+            [--man]                                                     \\
+            [--meta]                                                    \\
+            [--savejson <DIR>]                                          \\
+            [-v <level>] [--verbosity <level>]                          \\
+            [--version]                                                 \\
+            [--file <filename>]                                         \\
+            <inputDir>                                                  \\
+            <outputDir> 
 
 Description
 -----------
@@ -93,22 +97,12 @@ Now, prefix all calls with
 
 .. code:: bash
 
-    docker run --security-opt label=type:nvidia_container_t
-                -v $(pwd)/in:/incoming:z -v $(pwd)/out:/outgoing:z
-                docker.io/fnndsc/pl-objectdetection_moc_ppc64
-                objectdetection.py
-                /incoming /outgoing
+    docker run --security-opt label=type:nvidia_container_t    \
+               -v $(pwd):/incoming:z -v $(pwd)/out:/outgoing:z \
+               docker.io/fnndsc/pl-objectdetection_moc_ppc64    \
+               objectdetection.py                               \
+               -f animal360p.webm /incoming /outgoing
 
-Thus, getting inline help is:
-
-.. code:: bash
-
-    mkdir in out && chmod 777 out
-    docker run --security-opt label=type:nvidia_container_t
-                -v $(pwd)/in:/incoming:z -v $(pwd)/out:/outgoing:z
-                docker.io/fnndsc/pl-objectdetection_moc_ppc64
-                objectdetection.py
-                /incoming /outgoing
 
 
 
