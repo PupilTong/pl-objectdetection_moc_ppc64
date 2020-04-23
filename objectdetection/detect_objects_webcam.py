@@ -49,22 +49,18 @@ TRT_PREDICTION_LAYOUT = {
 
 def fetch_prediction_field(field_name, detection_out, pred_start_idx):
     """Fetches prediction field from prediction byte array.
-
     After TensorRT inference, prediction data is saved in
     byte array and returned by object detection network.
     This byte array contains several pieces of data about
     prediction - we call one such piece a prediction field.
     The prediction fields layout is described in TRT_PREDICTION_LAYOUT.
-
     This function, given prediction byte array returned by network,
     staring index of given prediction and field name of interest,
     returns prediction field data corresponding to given arguments.
-
     Args:
         field_name (str): field of interest, one of keys of TRT_PREDICTION_LAYOUT
         detection_out (array): object detection network output
         pred_start_idx (int): start index of prediction of interest in detection_out
-
     Returns:
         Prediction field corresponding to given data.
     """
@@ -111,6 +107,8 @@ def parse_commandline_arguments():
         help='if True, will run webcam application')
     parser.add_argument('-op', '--outpath',
         help='output directory path')
+    parser.add_argument('-in', '--inpath',
+        help='output directory path')
 
     # Parse arguments passed
     args = parser.parse_args()
@@ -146,6 +144,7 @@ def main(max_time, min_time, sum_time, num):
     # Parse command line arguments
     args = parse_commandline_arguments()
     outputdir_path = args.outpath
+    inputdir_path = args.inpath
     # Fetch .uff model path, convert from .pb
     # if needed, using prepare_ssd_model
     ssd_model_uff_path = PATHS.get_model_uff_path(MODEL_NAME)
@@ -167,7 +166,7 @@ def main(max_time, min_time, sum_time, num):
         # Define the video stream
         #cap = cv2.VideoCapture(0)
         #cap = cv2.VideoCapture('animal.webm')  # Change only if you have more than one webcams
-        cap = cv2.VideoCapture(str(os.environ['APPROOT']) + '/objectdetection/animal360p.webm')  # Change only if you have more than one webcams
+        cap = cv2.VideoCapture(inputdir_path)  # Change only if you have more than one webcams
         if (cap.isOpened()== False):
             print("Error opening video stream or file")
             exit()
@@ -180,7 +179,7 @@ def main(max_time, min_time, sum_time, num):
         fps = cap.get(cv2.CAP_PROP_FPS)
 
 	    # Define the codec and create VideoWriter object.The output is stored in 'outpy.avi' file.
-        out = cv2.VideoWriter('animal360pOutput.mp4',cv2.VideoWriter_fourcc(*'XVID'), fps, (frame_width,frame_height))
+        out = cv2.VideoWriter(str(outputdir_path + "/output.avi"),cv2.VideoWriter_fourcc(*'XVID'), fps, (frame_width,frame_height))
 
         # Loop for running inference on frames from the webcam
         while True:
@@ -252,5 +251,3 @@ if __name__ == '__main__':
     print("maximum_fps: " + str(max_fps) + "\n" + "minimum_fps: " + str(min_fps) + "\n" + "average_fps: " + str(avg_fps))
     data = [{'maximum_fps': max_fps, 'minimum_fps': min_fps, 'average_fps': avg_fps}]
     createOrUpdate(outputdir, data)
-
-
