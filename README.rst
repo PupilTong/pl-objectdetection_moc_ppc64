@@ -16,21 +16,49 @@ pl-objectdetection
 Abstract
 --------
 
-An app to ...
+This is the original runnable object dection python3 scripts and its running environment container on ppc64le. To get the **ppc64le chrisapp** version, click here:
 
+https://github.com/FNNDSC/pl-objectdetection_moc_ppc64
+
+check the **parent scripts** & amd64 container powered by nvidia:
+
+https://github.com/NVIDIA/object-detection-tensorrt-example
+
+**Docker container** published on dockerhub:
+
+https://hub.docker.com/repository/docker/fnndsc/pl-objectdetection_moc_ppc64
+
+For **amd64 version scripts** check here:
+
+https://github.com/FNNDSC/object-detection-tensorrt-example
+
+**amd64 version Chris app**:
+
+https://github.com/FNNDSC/pl-object-detection
+
+Contributer
+--------
+@PupilTong modified the original object detection for benchmarking usage & built runnable ppc64le running environment.
+@h4x0rMadness made it chris app & benchmarking outputs
+
+An app to ...
 
 Synopsis
 --------
 
 .. code::
 
-    python objectdetection.py                                           \
-        [-v <level>] [--verbosity <level>]                          \
-        [--version]                                                 \
-        [--man]                                                     \
-        [--meta]                                                    \
-        <inputDir>
-        <outputDir> 
+        python objectdetection.py                                         \\
+            [-h] [--help]                                               \\
+            [--json]                                                    \\
+            [--man]                                                     \\
+            [--meta]                                                    \\
+            [--savejson <DIR>]                                          \\
+            [-v <level>] [--verbosity <level>]                          \\
+            [--version]                                                 \\
+            [--file <filename>]                                         \\
+            <inputDir>                                                  \\
+            <outputDir> 
 
 Description
 -----------
@@ -58,28 +86,6 @@ Agruments
 Run
 ----
 
-This ``plugin`` can be run in two modes: natively as a python package or as a containerized docker image.
-
-Using PyPI
-~~~~~~~~~~
-
-To run from PyPI, simply do a 
-
-.. code:: bash
-
-    pip install objectdetection
-
-and run with
-
-.. code:: bash
-
-    objectdetection.py --man /tmp /tmp
-
-to get inline help. The app should also understand being called with only two positional arguments
-
-.. code:: bash
-
-    objectdetection.py /some/input/directory /destination/directory
 
 
 Using ``docker run``
@@ -91,21 +97,12 @@ Now, prefix all calls with
 
 .. code:: bash
 
-    docker run --rm -v $(pwd)/out:/outgoing                             \
-            fnndsc/pl-objectdetection objectdetection.py                        \
+    docker run --security-opt label=type:nvidia_container_t    \
+               -v $(pwd):/incoming:z -v $(pwd)/out:/outgoing:z \
+               docker.io/fnndsc/pl-objectdetection_moc_ppc64    \
+               objectdetection.py                               \
+               -f animal360p.webm /incoming /outgoing
 
-Thus, getting inline help is:
-
-.. code:: bash
-
-    mkdir in out && chmod 777 out
-    docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \
-            fnndsc/pl-objectdetection objectdetection.py                        \
-            --man                                                       \
-            /incoming /outgoing
-
-Examples
---------
 
 
 
